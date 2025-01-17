@@ -8,10 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: JeuDePlateauRepository::class)]
 class JeuDePlateau extends Jeux
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column]
     private ?int $nbPlateau = null;
@@ -21,11 +17,6 @@ class JeuDePlateau extends Jeux
 
     #[ORM\Column]
     private ?int $nbDee = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getNbPlateau(): ?int
     {

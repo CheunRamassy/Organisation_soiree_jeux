@@ -8,18 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: JeuDeCarteRepository::class)]
 class JeuDeCarte extends Jeux
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column]
     private ?int $nbCarte = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getNbCarte(): ?int
     {
