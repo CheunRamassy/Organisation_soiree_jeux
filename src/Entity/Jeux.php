@@ -29,6 +29,9 @@ class Jeux
     #[ORM\Column]
     private ?int $nbPlayers = null;
 
+    #[ORM\OneToOne(mappedBy: 'choix', cascade: ['persist', 'remove'])]
+    private ?Evenement $evenement = null;
+
 
     public function getId(): ?int
     {
@@ -67,6 +70,28 @@ class Jeux
     public function setNbPlayers(int $nbPlayers): static
     {
         $this->nbPlayers = $nbPlayers;
+
+        return $this;
+    }
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($evenement === null && $this->evenement !== null) {
+            $this->evenement->setChoix(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($evenement !== null && $evenement->getChoix() !== $this) {
+            $evenement->setChoix($this);
+        }
+
+        $this->evenement = $evenement;
 
         return $this;
     }
