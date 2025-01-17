@@ -5,10 +5,14 @@ namespace App\Controller;
 use App\Entity\JeuDeCarte;
 use App\Entity\JeuDeDuel;
 use App\Entity\JeuDePlateau;
+use App\Entity\Jeux;
+use App\Form\JeuxControllerType;
 use App\Repository\JeuDeCarteRepository;
 use App\Repository\JeuDeDuelRepository;
 use App\Repository\JeuxRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -29,11 +33,28 @@ final class JeuxController extends AbstractController
         ]);
     }
 
-    // #[Route('/createJeux', name: 'new_jeux', methods: ['POST'])]
-    // public function new(): Response
-    // {
+    #[Route('/createJeux', name: 'new_jeux', methods: ['GET'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $jeux = new Jeux();
+        $form = $this->createForm(JeuxControllerType::class, $jeux);
+        $form->handleRequest($request);
 
-    // }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data=$form->getData();
+
+            $entityManager->persist($jeux);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('show_jeux');
+        }
+
+        return $this->render('jeux/create.html.twig', [
+            'jeux' => $jeux,
+            'form' => $form,
+        ]);
+    }
+
 
     // #[Route('/{id}/editJeux', name: 'edit_jeux', methods: ['PUT'])]
     // public function edit(): Response
