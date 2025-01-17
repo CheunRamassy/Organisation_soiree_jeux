@@ -25,10 +25,10 @@ class Evenement
     /**
      * @var Collection<int, Utilisateur>
      */
-    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'organisateur')]
+    #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'organisateur', cascade:['persist'])]
     private Collection $organisateur;
 
-    #[ORM\OneToOne(inversedBy: 'evenement')]
+    #[ORM\OneToOne(inversedBy: 'evenement', cascade:['persist'])]
     private ?Jeux $choix = null;
 
     public function __construct()

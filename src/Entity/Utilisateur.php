@@ -22,7 +22,7 @@ class Utilisateur
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'utilisateurs')]
+    #[ORM\ManyToOne(inversedBy: 'utilisateurs', cascade:['persist'])]
     private ?Evenement $organisateur = null;
 
     public function getId(): ?int

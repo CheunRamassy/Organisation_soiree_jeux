@@ -3,6 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Evenement;
+use App\Entity\JeuDeCarte;
+use App\Entity\JeuDeDuel;
+use App\Entity\JeuDePlateau;
 use App\Entity\Jeux;
 use App\Entity\Utilisateur;
 use App\Factory\EvenementFactory;
@@ -26,16 +29,39 @@ class AppFixtures extends Fixture
             $evenement = new Evenement();
             $evenement->setTheme("event $i");
             $evenement->setDate(new \DateTime());
-            // $user->setOrganisateur($evenement);
+            
+            $jeu= new JeuDeDuel();
+            $jeu->setName("Jeu de duel $i");
+            $jeu->setRegle("regle $i");
+            $jeu->setNbPlayers($i);
+            // $jeu->setType(array_rand(["JeuDeDuel","JeuDeCarte", "JeuPlateau"]));
+            $jeu->setEvenement($evenement);
+            $evenement->setChoix($jeu);
 
+            $jeu= new JeuDeCarte();
+            $jeu->setName("Jeu de carte $i");
+            $jeu->setRegle("regle $i");
+            $jeu->setNbPlayers($i);
+            // $jeu->setType(array_rand(["JeuDeDuel","JeuDeCarte", "JeuPlateau"]));
+            $jeu->setEvenement($evenement);
+            $evenement->setChoix($jeu);
+
+            $jeu= new JeuDePlateau();
+            $jeu->setName("Jeu de plateau $i");
+            $jeu->setRegle("regle $i");
+            $jeu->setNbPlayers($i);
+            // $jeu->setType(array_rand(["JeuDeDuel","JeuDeCarte", "JeuPlateau"]));
+            $jeu->setEvenement($evenement);
+            $evenement->setChoix($jeu);
 
             for ($j = 0; $j < 5; $j++) {
+
                 $user = new Utilisateur();
                 $user->setName("user $i");
                 $user->setemail("user@user$i");          
                 $user->setpassword("test");
                 $evenement->addOrganisateur($user);
-            
+
             }
 
             $manager->persist($user);
