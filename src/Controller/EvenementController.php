@@ -25,7 +25,7 @@ final class EvenementController extends AbstractController
         ]);
     }
 
-    #[Route('/createEvent', name: 'new_event', methods: ['POST'])]
+    #[Route('/createEvent', name: 'new_event', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $event = new Evenement();
@@ -46,13 +46,25 @@ final class EvenementController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}/edit', name: 'edit_event', methods: ['PUT'])]
-    // public function edit(): Response
-    // {
+    #[Route('/{id}/edit', name: 'edit_event', methods: ['GET', 'PUT'])]
+    public function edit(Request $request, Evenement $evenement, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(EvenementControllerType::class, $evenement);
+        $form->handleRequest($request);
 
-    // }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
 
-    // #[Route('/{id}', name: 'delete_event', methods: ['POST'])]
+            return $this->redirectToRoute('show_jeux', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('evenement/edit.html.twig', [
+            'event' => $evenement,
+            'form' => $form,
+        ]);
+    }
+
+    // #[Route('/{id}', name: 'delete_event', methods: ['GET', 'POST'])]
     // public function delete(): Response
     // {
 
