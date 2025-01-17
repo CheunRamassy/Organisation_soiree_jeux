@@ -2,6 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\JeuDeCarte;
+use App\Entity\JeuDeDuel;
+use App\Entity\JeuDePlateau;
+use App\Repository\JeuDeCarteRepository;
+use App\Repository\JeuDeDuelRepository;
 use App\Repository\JeuxRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,8 +16,12 @@ final class JeuxController extends AbstractController
 {
  
     #[Route('/showJeux', name: 'show_jeux', methods: ['GET'])]
-    public function show(JeuxRepository $repository): Response
-    {
+    public function show(
+        JeuxRepository $repository, 
+        // JeuDeDuelRepository $repoJeuDuel, 
+        // JeuDeCarteRepository $repoJeuCarte, 
+        // JeuDePlateau $repoJeuPlateau
+        ): Response {
         $Jeux = $repository->findAll();
 
         return $this->render('jeux/index.html.twig', [

@@ -10,9 +10,12 @@
 
 <div class="example-wrapper">
     {% for Jeu in Jeux %}
-        {{Jeu.name}}
-        {{Jeu.regle}}
-        {{Jeu.nbPlayers}}
+    {% include 'Component/component_Jeux.html.twig' with {
+            name : Jeu.name,
+            regle: Jeu.regle,
+            nbPlayers: Jeu.nbPlayers,
+            type: Jeu.type,
+        } %}
     {% endfor %}
 </div>
 {% endblock %}
