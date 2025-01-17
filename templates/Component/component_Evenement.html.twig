@@ -1,0 +1,12 @@
+<article>
+    <h1>{{theme}}</h1>
+    <h3>{{date | date }}</h3>
+    {% for organisateur in organisateur%}
+    {% if organisateur.name == null %}
+        <h3>Aucune donnée</h3>
+    {% else %}
+        <h3>{{organisateur.name}}</h3>
+        {% endif %}
+    {% endfor %} 
+    <h3>{{choix}}</h3> 
+</article>

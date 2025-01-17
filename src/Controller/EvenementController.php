@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\EvenementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,12 +12,15 @@ use Symfony\Component\Routing\Attribute\Route;
 final class EvenementController extends AbstractController
 {
  
-    // #[Route('/home', name: 'show_event', methods: ['GET'])]
-    // public function show(): Response
-    // {
+    #[Route('/showEvent', name: 'show_event', methods: ['GET'])]
+    public function show(EvenementRepository $repository): Response
+    {
+        $event = $repository->findAll();
 
-
-    // }
+        return $this->render('evenement/index.html.twig', [
+            'events' => $event,
+        ]);
+    }
 
     // #[Route('/create', name: 'new_event', methods: ['POST'])]
     // public function new(): Response
