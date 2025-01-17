@@ -16,9 +16,6 @@ class JeuDeCarte extends Jeux
     #[ORM\Column]
     private ?int $nbCarte = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nomDuJeu = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -36,15 +33,4 @@ class JeuDeCarte extends Jeux
         return $this;
     }
 
-    public function getNomDuJeu(): ?string
-    {
-        return $this->nomDuJeu;
-    }
-
-    public function setNomDuJeu(string $nomDuJeu): static
-    {
-        $this->nomDuJeu = $nomDuJeu;
-
-        return $this;
-    }
 }
