@@ -18,6 +18,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class JeuxController extends AbstractController
 {
+
+    private $jeuxRepository;
+    public function __construct(JeuxRepository $jeuxRepository)
+    {
+        $this->jeuxRepository = $jeuxRepository;
+    }
  
     #[Route('/showJeux', name: 'show_jeux', methods: ['GET'])]
     public function show(
@@ -74,10 +80,16 @@ final class JeuxController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}', name: 'delete_jeux', methods: ['POST'])]
-    // public function delete(): Response
-    // {
+    #[Route('/{id}', name: 'delete_jeux', methods: ['GET', 'POST'])]
+    public function delete(int $id, Request $request, Jeux $Jeux, EntityManagerInterface $entityManager): Response
+    {
+        $Jeux=$this->jeuxRepository->find($id);
+        if ($this->isCsrfTokenValid('delete'.$Jeux->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($Jeux);
+            $entityManager->flush();
+        }
 
+        return $this->redirectToRoute('show_jeux', [], Response::HTTP_SEE_OTHER);
+    }
 
-    // }
 }
