@@ -33,7 +33,7 @@ final class JeuxController extends AbstractController
         ]);
     }
 
-    #[Route('/createJeux', name: 'new_jeux', methods: ['GET'])]
+    #[Route('/createJeux', name: 'new_jeux', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $jeux = new Jeux();
@@ -56,11 +56,23 @@ final class JeuxController extends AbstractController
     }
 
 
-    // #[Route('/{id}/editJeux', name: 'edit_jeux', methods: ['PUT'])]
-    // public function edit(): Response
-    // {
+    #[Route('/{id}/editJeux', name: 'edit_jeux', methods: ['GET', 'PUT'])]
+    public function edit(Request $request, Jeux $jeux, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(JeuxControllerType::class, $jeux);
+        $form->handleRequest($request);
 
-    // }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('show_jeux', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('jeux/edit.html.twig', [
+            'jeux' => $jeux,
+            'form' => $form,
+        ]);
+    }
 
     // #[Route('/{id}', name: 'delete_jeux', methods: ['POST'])]
     // public function delete(): Response
