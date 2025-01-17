@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        // EvenementFactory::createMany(10);
+        // Ajout des données dans la base de données
         JeuDeDuelFactory::createMany(10);
         JeuDeCarteFactory::createMany(10);
         JeuDePlateauFactory::createMany(10);
@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
             $jeu->setName("Jeu de duel $i");
             $jeu->setRegle("regle $i");
             $jeu->setNbPlayers($i);
-            // $jeu->setType(array_rand(["JeuDeDuel","JeuDeCarte", "JeuPlateau"]));
+    
             $jeu->setEvenement($evenement);
             $evenement->setChoix($jeu);
 
@@ -42,7 +42,6 @@ class AppFixtures extends Fixture
             $jeu->setName("Jeu de carte $i");
             $jeu->setRegle("regle $i");
             $jeu->setNbPlayers($i);
-            // $jeu->setType(array_rand(["JeuDeDuel","JeuDeCarte", "JeuPlateau"]));
             $jeu->setEvenement($evenement);
             $evenement->setChoix($jeu);
 
@@ -50,7 +49,6 @@ class AppFixtures extends Fixture
             $jeu->setName("Jeu de plateau $i");
             $jeu->setRegle("regle $i");
             $jeu->setNbPlayers($i);
-            // $jeu->setType(array_rand(["JeuDeDuel","JeuDeCarte", "JeuPlateau"]));
             $jeu->setEvenement($evenement);
             $evenement->setChoix($jeu);
 
