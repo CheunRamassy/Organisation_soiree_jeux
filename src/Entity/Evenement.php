@@ -28,9 +28,6 @@ class Evenement
     #[ORM\OneToMany(targetEntity: Utilisateur::class, mappedBy: 'organisateur')]
     private Collection $organisateur;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Jeux $choix = null;
-
     public function __construct()
     {
         $this->organisateur = new ArrayCollection();
@@ -95,15 +92,5 @@ class Evenement
         return $this;
     }
 
-    public function getChoix(): ?Jeux
-    {
-        return $this->choix;
-    }
 
-    public function setChoix(?Jeux $choix): static
-    {
-        $this->choix = $choix;
-
-        return $this;
-    }
 }

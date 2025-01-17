@@ -29,6 +29,7 @@ class Jeux
     #[ORM\Column]
     private ?int $nbPlayers = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,4 +70,6 @@ class Jeux
 
         return $this;
     }
+
+
 }
